@@ -9,3 +9,20 @@ env-vars-template:
 
 pyshell:
 	poetry shell
+
+server:
+	python manage.py runserver_plus
+
+djshell:
+	python manage.py shell_plus --bpython
+
+
+i-djshell:
+	python manage.py shell_plus --ipython
+
+migrations:
+	python manage.py makemigrations
+	python manage.py migrate
+
+static:
+	python manage.py collectstatic
