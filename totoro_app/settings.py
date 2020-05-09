@@ -48,7 +48,8 @@ class Base(Configuration):
     ]
 
     PROJECT_APPS = [
-        "movies"
+        "movies",
+        "external_services"
     ]
 
     INSTALLED_APPS = SYSTEM_APPS + PROJECT_APPS
@@ -212,6 +213,12 @@ class Dev(Base):
                 "": {"level": "WARNING", "handlers": ["console"], },
                 # Our application code
                 "movies": {
+                    "level": LOG_LEVEL,
+                    "handlers": ["console"],
+                    # Avoid double logging because of root logger
+                    "propagate": False,
+                },
+                "external_services": {
                     "level": LOG_LEVEL,
                     "handlers": ["console"],
                     # Avoid double logging because of root logger
