@@ -2,7 +2,7 @@
 
 # Feature List
 - Python 3 Django Application with DRF
-- Ghibli API client for API requests
+- Ghibli API client for making external API requests
 - Response caching with TTL of 1 minute
 - Test Cases
 
@@ -20,8 +20,8 @@
     - Django Debug toolbar (Dev Environment)
     - Django YASG for Swagger Documentation
 - Movies barebones API
-- Facade API client over Ghibli API
-- Pluggin external API response inside Movies API
 - Caching API response
+- Facade API client over Ghibli API
+- Plug in external API response inside Movies API
 - Structured Logging
 - Exception Management Using Sentry
