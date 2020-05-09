@@ -6,3 +6,6 @@ requirements:
 
 env-vars-template:
 	cp .env .env.template
+
+pyshell:
+	poetry shell
