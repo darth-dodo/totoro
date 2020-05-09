@@ -10,3 +10,9 @@
 - --nf: "new tests" first.
 - --ff: "fail tests" first.
 - --lf: only the "last fail"
+
+## Caching
+- Caching is done using Redis
+- Redis database can be opened using `redis-cli -n 1`
+- The keys can be viewed using `keys *`
+- Use the command `FLUSHALL` to remove all the keys
