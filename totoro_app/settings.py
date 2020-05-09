@@ -160,6 +160,17 @@ class Base(Configuration):
             "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
         }
 
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": os.getenv("REDIS_URL"),
+            "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
+            "KEY_PREFIX": "totoro_app",
+        }
+    }
+
+    CACHE_TTL = values.PositiveIntegerValue(environ_prefix="", default=(0))
+
 
 class Dev(Base):
 
