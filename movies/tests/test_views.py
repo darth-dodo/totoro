@@ -15,6 +15,8 @@ class TestMoviesViewSet:
 
         response_json = response.json()
         test_data = {f"key_{i}": i * i for i in range(1, 10)}
-        set(response_json.keys()) == set(test_data.keys())
-        set(response_json.values()) == set(test_data.values())
+        del response_json["timestamp"]
+
+        assert set(response_json.keys()) == set(test_data.keys())
+        assert set(response_json.values()) == set(test_data.values())
         assert response.status_code == HTTP_200_OK

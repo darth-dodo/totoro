@@ -13,6 +13,7 @@ django-extensions = "^2.2.9"
 ipython = "^7.14.0"
 bpython = "^0.19"
 djangorestframework = "^3.11.0"
+django-redis = "^4.11.0"
 
 [tool.poetry.dev-dependencies]
 pre-commit = "^2.3.0"
