@@ -48,6 +48,7 @@ class Base(Configuration):
     ]
 
     PROJECT_APPS = [
+        "movies"
     ]
 
     INSTALLED_APPS = SYSTEM_APPS + PROJECT_APPS
@@ -156,9 +157,6 @@ class Base(Configuration):
             "DEFAULT_PERMISSION_CLASSES": (
                 "rest_framework.permissions.IsAuthenticated",
             ),
-            "DEFAULT_FILTER_BACKENDS": (
-                "django_filters.rest_framework.DjangoFilterBackend",
-            ),
             "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
         }
 
@@ -202,12 +200,12 @@ class Dev(Base):
                 # default for all undefined Python modules
                 "": {"level": "WARNING", "handlers": ["console"], },
                 # Our application code
-                # "movies": {
-                #     "level": LOG_LEVEL,
-                #     "handlers": ["console"],
-                #     # Avoid double logging because of root logger
-                #     "propagate": False,
-                # },
+                "movies": {
+                    "level": LOG_LEVEL,
+                    "handlers": ["console"],
+                    # Avoid double logging because of root logger
+                    "propagate": False,
+                },
                 # Default runserver request logging
                 "django.server": DEFAULT_LOGGING["loggers"]["django.server"],
             },

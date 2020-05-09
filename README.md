@@ -19,6 +19,9 @@
     - Pytest and Django Pytest (Dev Environment)
     - Django Debug toolbar (Dev Environment)
     - Django YASG for Swagger Documentation
+- Movies barebones API
 - Facade API client over Ghibli API
-- Movies API
-- Caching API response    
+- Pluggin external API response inside Movies API
+- Caching API response
+- Structured Logging
+- Exception Management Using Sentry
