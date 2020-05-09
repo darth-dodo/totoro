@@ -1,4 +1,8 @@
+import logging
+
 from external_services.api_clients.ghibli_api import GhibliAPIClient
+
+logger = logging.getLogger(__name__)
 
 
 def fetch_all_movies():
@@ -22,29 +26,40 @@ def generate_list_of_films_with_people():
     movies_data_by_url_dict = {
         current_movie["url"]: current_movie for current_movie in movies_data}
 
-    all_movies_urls = set(movies_data_by_url_dict.keys())
+    all_movie_urls = list(movies_data_by_url_dict.keys())
+
+    """
+    - iterate over the people
+    - if the movie url is present in all movies, attach the people in a new dict across the movie
+    - at the end of the loop, merge the OG movies dict and the movie_people dict
+    """
+
+    movie_people_mapping = dict()
 
     for person in people_data:
-        person_movies_set = set(person["films"])
-        print(all_movies_urls)
-        print(person_movies_set)
 
-        if not person_movies_set.intersection(all_movies_urls):
-            print("This person is not present in any of the movies")
-            continue
+        person_movie_urls = person["films"]
 
-        print("Intersection found!")
-        print(person_movies_set.intersection(all_movies_urls))
+        for movie_url in person_movie_urls:
 
-        for current_movie in person_movies_set:
-            current_movie_details = movies_data_by_url_dict.get(current_movie)
-            current_movie_people = current_movie_details.get("people", [])
-            current_movie_people.append(person)
+            if movie_url not in all_movie_urls:
+                logger.info("Person movie is not present in all movies")
+                continue
 
-            current_movie_details["people"] = current_movie_people
-            movies_data_by_url_dict[current_movie] = current_movie_details
+            movie_people = movie_people_mapping.get(movie_url, [])
+            movie_people.append(person)
+            movie_people_mapping[movie_url] = movie_people
 
-    # convert the movies from key value to list
-    movies_data = list(movies_data_by_url_dict.values())
+    # no people key for movie with no people
+    # for movie, people in movie_people_mapping.items():
+    #     movie_info = movies_data_by_url_dict[movie]
+    #     movie_info["people"] = people
+    #     movies_data_by_url_dict[movie] = movie_info
 
-    return movies_data
+    # movies with no people have an empty array against the people key
+    for movie_url, movie_info in movies_data_by_url_dict.items():
+        movie_people = movie_people_mapping.get(movie_url, [])
+        movie_info["people"] = movie_people
+        movies_data_by_url_dict[movie_url] = movie_info
+
+    return list(movies_data_by_url_dict.values())
