@@ -16,6 +16,7 @@ handler404 = "rest_framework.exceptions.bad_request"
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path(r"movies/", include(("movies.urls", "movies"), namespace="movies")),
 ]
 
 if "debug_toolbar" in settings.INSTALLED_APPS:
