@@ -7,13 +7,13 @@ from requests.exceptions import RequestException
 logger = logging.getLogger(__name__)
 
 
-class GhibliClient():
+class GhibliAPIClient:
 
     """
 
     Sample Usage:
 
-    client = GhibliClient()
+    client = GhibliAPIClient()
     movies_fields = {"fields": "id,title,director,producer,release_date,url"}
     movies_data = client.get_movies(**movies_fields)
 
