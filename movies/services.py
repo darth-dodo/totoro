@@ -19,12 +19,21 @@ def fetch_all_people():
     return people_data
 
 
-def generate_list_of_films_with_people():
+def generate_list_of_films_with_people(filter_movies_uuid=[]):
     movies_data = fetch_all_movies()
     people_data = fetch_all_people()
 
-    movies_data_by_url_dict = {
-        current_movie["url"]: current_movie for current_movie in movies_data}
+    if not isinstance(filter_movies_uuid, list):
+        filter_movies_uuid = [filter_movies_uuid]
+
+    if filter_movies_uuid:
+        movies_data_by_url_dict = {
+            current_movie["url"]: current_movie for current_movie in movies_data if current_movie["id"] in filter_movies_uuid
+        }
+    else:
+        movies_data_by_url_dict = {
+            current_movie["url"]: current_movie for current_movie in movies_data
+        }
 
     all_movie_urls = list(movies_data_by_url_dict.keys())
 
@@ -49,12 +58,6 @@ def generate_list_of_films_with_people():
             movie_people = movie_people_mapping.get(movie_url, [])
             movie_people.append(person)
             movie_people_mapping[movie_url] = movie_people
-
-    # no people key for movie with no people
-    # for movie, people in movie_people_mapping.items():
-    #     movie_info = movies_data_by_url_dict[movie]
-    #     movie_info["people"] = people
-    #     movies_data_by_url_dict[movie] = movie_info
 
     # movies with no people have an empty array against the people key
     for movie_url, movie_info in movies_data_by_url_dict.items():
