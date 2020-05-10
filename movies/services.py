@@ -9,6 +9,32 @@ class MovieValueError(ValueError):
     pass
 
 
+# application facing services
+
+
+def generate_list_movies_with_people():
+    movies_data = _fetch_all_movies()
+    people_data = _fetch_all_people()
+
+    response_data = _merge_movies_data_with_people_data(
+        movies_data, people_data
+    )
+
+    return response_data
+
+
+def generate_movie_data_with_people(movie_uuid):
+    movie_data = _fetch_movie_data(movie_uuid)
+    people_data = _fetch_all_people()
+
+    response_data = _merge_movies_data_with_people_data(
+        movie_data, people_data
+    )
+
+    return response_data
+
+
+# "private" helpers
 def _fetch_all_movies():
     client = GhibliAPIClient()
     movies_fields = {"fields": "id,title,director,producer,release_date,url"}
@@ -85,27 +111,5 @@ def _merge_movies_data_with_people_data(movies_data, people_data):
         movies_data_by_url_dict[movie_url] = movie_info
 
     response_data = list(movies_data_by_url_dict.values())
-
-    return response_data
-
-
-def generate_list_movies_with_people():
-    movies_data = _fetch_all_movies()
-    people_data = _fetch_all_people()
-
-    response_data = _merge_movies_data_with_people_data(
-        movies_data, people_data
-    )
-
-    return response_data
-
-
-def generate_movie_data_with_people(movie_uuid):
-    movie_data = _fetch_movie_data(movie_uuid)
-    people_data = _fetch_all_people()
-
-    response_data = _merge_movies_data_with_people_data(
-        movie_data, people_data
-    )
 
     return response_data
