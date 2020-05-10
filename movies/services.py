@@ -5,38 +5,54 @@ from external_services.api_clients.ghibli_api import GhibliAPIClient
 logger = logging.getLogger(__name__)
 
 
-def fetch_all_movies():
+class MovieValueError(ValueError):
+    pass
+
+
+def _fetch_all_movies():
     client = GhibliAPIClient()
     movies_fields = {"fields": "id,title,director,producer,release_date,url"}
     movies_data = client.get_movies(**movies_fields)
     return movies_data
 
 
-def fetch_all_people():
+def _fetch_all_people():
     client = GhibliAPIClient()
     people_fields = {"fields": "id,name,films,url"}
     people_data = client.get_people(**people_fields)
     return people_data
 
 
-def generate_list_of_films_with_people(filter_movies_uuid=[]):
-    movies_data = fetch_all_movies()
-    people_data = fetch_all_people()
+def _fetch_movie_data(movie_uuid):
+    all_movies_data = _fetch_all_movies()
+    movie_data = [
+        movie_data
+        for movie_data in all_movies_data
+        if movie_data["id"] == movie_uuid
+    ]
 
-    if not isinstance(filter_movies_uuid, list):
-        filter_movies_uuid = [filter_movies_uuid]
+    if len(movie_data) > 1:
+        raise MovieValueError(
+            "External API returned more than one values for UUID!"
+        )
 
-    if filter_movies_uuid:
-        movies_data_by_url_dict = {
-            current_movie["url"]: current_movie
-            for current_movie in movies_data
-            if current_movie["id"] in filter_movies_uuid
-        }
-    else:
-        movies_data_by_url_dict = {
-            current_movie["url"]: current_movie
-            for current_movie in movies_data
-        }
+    if not movie_data:
+        raise MovieValueError(
+            f"Movie ID {movie_uuid} not present in external API!"
+        )
+
+    return movie_data
+
+
+def _merge_movies_data_with_people_data(movies_data, people_data):
+    response_data = dict()
+
+    if not movies_data:
+        return response_data
+
+    movies_data_by_url_dict = {
+        current_movie["url"]: current_movie for current_movie in movies_data
+    }
 
     all_movie_urls = list(movies_data_by_url_dict.keys())
 
@@ -68,4 +84,28 @@ def generate_list_of_films_with_people(filter_movies_uuid=[]):
         movie_info["people"] = movie_people
         movies_data_by_url_dict[movie_url] = movie_info
 
-    return list(movies_data_by_url_dict.values())
+    response_data = list(movies_data_by_url_dict.values())
+
+    return response_data
+
+
+def generate_list_movies_with_people():
+    movies_data = _fetch_all_movies()
+    people_data = _fetch_all_people()
+
+    response_data = _merge_movies_data_with_people_data(
+        movies_data, people_data
+    )
+
+    return response_data
+
+
+def generate_movie_data_with_people(movie_uuid):
+    movie_data = _fetch_movie_data(movie_uuid)
+    people_data = _fetch_all_people()
+
+    response_data = _merge_movies_data_with_people_data(
+        movie_data, people_data
+    )
+
+    return response_data

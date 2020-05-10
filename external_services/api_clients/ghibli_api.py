@@ -7,6 +7,10 @@ from requests.exceptions import RequestException
 logger = logging.getLogger(__name__)
 
 
+class ExternalAPIError(ValueError):
+    pass
+
+
 class GhibliAPIClient:
 
     """
@@ -65,7 +69,9 @@ class GhibliAPIClient:
         # wrap all `requests` library error and server as custom application error
         except RequestException as e:
             logger.error(e.__str__(), exc_info=True)
-            raise ValueError("Error while communication with external API")
+            raise ExternalAPIError(
+                "Error while communication with external API"
+            )
 
     def _prepare_query_params(self, query_kwargs):
         query_params = dict()
