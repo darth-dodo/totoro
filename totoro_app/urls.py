@@ -28,7 +28,9 @@ if "debug_toolbar" in settings.INSTALLED_APPS:
 if settings.EXPOSE_SWAGGER_INTERFACE:
     schema_view = get_schema_view(
         openapi.Info(
-            title="Totoro API", default_version="v1", description="Totoro Application API",
+            title="Totoro API",
+            default_version="v1",
+            description="Totoro Application API",
         ),
         public=True,
         permission_classes=(permissions.AllowAny,),

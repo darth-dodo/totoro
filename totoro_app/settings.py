@@ -47,10 +47,7 @@ class Base(Configuration):
         "django_extensions",
     ]
 
-    PROJECT_APPS = [
-        "movies",
-        "external_services"
-    ]
+    PROJECT_APPS = ["movies", "external_services"]
 
     INSTALLED_APPS = SYSTEM_APPS + PROJECT_APPS
 
@@ -88,9 +85,9 @@ class Base(Configuration):
     # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
         }
     }
 
@@ -101,9 +98,15 @@ class Base(Configuration):
         {
             "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
         },
-        {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator", },
-        {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator", },
-        {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator", },
+        {
+            "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        },
+        {
+            "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+        },
+        {
+            "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+        },
     ]
 
     # Internationalization
@@ -177,7 +180,9 @@ class Dev(Base):
 
     DEBUG = values.BooleanValue(environ_prefix="", default=True)
     INTERNAL_IPS = values.ListValue(environ_prefix="", default=["127.0.0.1"])
-    EXPOSE_SWAGGER_INTERFACE = values.BooleanValue(environ_prefix="", default=True)
+    EXPOSE_SWAGGER_INTERFACE = values.BooleanValue(
+        environ_prefix="", default=True
+    )
     LOG_LEVEL = "DEBUG"
 
     DEV_APPS = [
@@ -201,16 +206,21 @@ class Dev(Base):
                     # exact format is not important, this is the minimum information
                     "format": "%(asctime)s %(name)-12s %(levelname)-8s %(message)s",
                 },
-                "django.server": DEFAULT_LOGGING["formatters"]["django.server"],
+                "django.server": DEFAULT_LOGGING["formatters"][
+                    "django.server"
+                ],
             },
             "handlers": {
                 # console logs to stderr
-                "console": {"class": "logging.StreamHandler", "formatter": "default", },
+                "console": {
+                    "class": "logging.StreamHandler",
+                    "formatter": "default",
+                },
                 "django.server": DEFAULT_LOGGING["handlers"]["django.server"],
             },
             "loggers": {
                 # default for all undefined Python modules
-                "": {"level": "WARNING", "handlers": ["console"], },
+                "": {"level": "WARNING", "handlers": ["console"],},
                 # Our application code
                 "movies": {
                     "level": LOG_LEVEL,

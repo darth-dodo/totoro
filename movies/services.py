@@ -28,11 +28,14 @@ def generate_list_of_films_with_people(filter_movies_uuid=[]):
 
     if filter_movies_uuid:
         movies_data_by_url_dict = {
-            current_movie["url"]: current_movie for current_movie in movies_data if current_movie["id"] in filter_movies_uuid
+            current_movie["url"]: current_movie
+            for current_movie in movies_data
+            if current_movie["id"] in filter_movies_uuid
         }
     else:
         movies_data_by_url_dict = {
-            current_movie["url"]: current_movie for current_movie in movies_data
+            current_movie["url"]: current_movie
+            for current_movie in movies_data
         }
 
     all_movie_urls = list(movies_data_by_url_dict.keys())

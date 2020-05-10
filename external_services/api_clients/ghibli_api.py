@@ -20,6 +20,7 @@ class GhibliAPIClient:
     people_fields = {"fields": "id,name,films"}
     people_data = client.get_people(**people_fields)
     """
+
     FILMS_URL = "films/"
     PEOPLE_URL = "people/"
     MAX_PAGE_SIZE = 250
@@ -30,11 +31,11 @@ class GhibliAPIClient:
         self.url = None
         self.params = None
         self.data = None
-        self.method = 'head'
+        self.method = "head"
 
     def get_movies(self, **kwargs):
         self.url = f"{self.base_url}{self.FILMS_URL}"
-        self.method = 'get'
+        self.method = "get"
         self.params = self._prepare_query_params(kwargs)
 
         self._make_request()
@@ -43,7 +44,7 @@ class GhibliAPIClient:
 
     def get_people(self, **kwargs):
         self.url = f"{self.base_url}{self.PEOPLE_URL}"
-        self.method = 'get'
+        self.method = "get"
         self.params = self._prepare_query_params(kwargs)
 
         self._make_request()
@@ -56,7 +57,8 @@ class GhibliAPIClient:
                 method=self.method,
                 url=self.url,
                 params=self.params,
-                data=self.data)
+                data=self.data,
+            )
             print(f"Request {self.response.url}")
             self.response.raise_for_status()
 

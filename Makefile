@@ -26,3 +26,7 @@ migrations:
 
 static:
 	python manage.py collectstatic
+
+update-requirements:
+	make requirements
+	make requirements-dev
