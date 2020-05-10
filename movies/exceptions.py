@@ -1,0 +1,2 @@
+class MovieDoesNotExist(ValueError):
+    pass

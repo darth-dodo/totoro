@@ -23,8 +23,12 @@
 - Caching API response
 - Facade API client over Ghibli API
 - Plug in external API response inside Movies API
+- Refactor Services
+- Application Exceptions
+- Test Suite
 - Structured Logging
 - Exception Management Using Sentry
+- API Throttling
 
 
 # Development Environment

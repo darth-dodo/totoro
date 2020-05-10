@@ -1,12 +1,9 @@
 import logging
 
 from external_services.api_clients.ghibli_api import GhibliAPIClient
+from movies.exceptions import MovieDoesNotExist
 
 logger = logging.getLogger(__name__)
-
-
-class MovieValueError(ValueError):
-    pass
 
 
 # application facing services
@@ -60,12 +57,12 @@ def _fetch_movie_data(movie_uuid):
     ]
 
     if len(movie_data) > 1:
-        raise MovieValueError(
+        raise MovieDoesNotExist(
             "External API returned more than one values for UUID!"
         )
 
     if not movie_data:
-        raise MovieValueError(
+        raise MovieDoesNotExist(
             f"Movie ID {movie_uuid} not present in external API!"
         )
 

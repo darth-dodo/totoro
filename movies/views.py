@@ -9,9 +9,9 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND
 from rest_framework.viewsets import ViewSet
 
-from external_services.api_clients.ghibli_api import ExternalAPIError
+from external_services.exceptions import ExternalAPIError
+from movies.exceptions import MovieDoesNotExist
 from movies.services import (
-    MovieValueError,
     generate_list_movies_with_people,
     generate_movie_data_with_people,
 )
@@ -29,7 +29,8 @@ class GhibliMovies(ViewSet):
 
         try:
             api_data = generate_list_movies_with_people()
-        except ValueError as e:
+
+        except ExternalAPIError as e:
             bad_request_data = dict()
             bad_request_data["message"] = str(e)
             return Response(data=bad_request_data, status=HTTP_400_BAD_REQUEST)
@@ -48,7 +49,7 @@ class GhibliMovies(ViewSet):
         try:
             api_data = generate_movie_data_with_people(pk)
 
-        except MovieValueError as e:
+        except MovieDoesNotExist as e:
             data_not_found = dict()
             data_not_found["message"] = str(e)
             return Response(data=data_not_found, status=HTTP_404_NOT_FOUND)
