@@ -25,3 +25,9 @@
 - Plug in external API response inside Movies API
 - Structured Logging
 - Exception Management Using Sentry
+
+
+# Development Environment
+- Poetry is used for environment management
+- Using Precommit hooks to run checks before issuing a commit
+- Using Black for code autoformatting. [PEP8 guidelines are a subset of Black](https://www.mattlayman.com/blog/2018/python-code-black/)
