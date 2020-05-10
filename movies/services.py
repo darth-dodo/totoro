@@ -35,6 +35,8 @@ def generate_movie_data_with_people(movie_uuid):
 
 
 # "private" helpers
+
+
 def _fetch_all_movies():
     client = GhibliAPIClient()
     movies_fields = {"fields": "id,title,director,producer,release_date,url"}
