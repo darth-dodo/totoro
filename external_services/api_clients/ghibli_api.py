@@ -61,10 +61,12 @@ class GhibliAPIClient:
                 params=self.params,
                 data=self.data,
             )
-            print(f"Request {self.response.url}")
+
+            logger.debug(f"Request URL: {self.response.url}")
+
             self.response.raise_for_status()
 
-        # wrap all `requests` library error and server as custom application error
+        # wrap all `requests` library error and serve as custom application error
         except RequestException as e:
             logger.error(e.__str__(), exc_info=True)
             raise ExternalAPIError(
