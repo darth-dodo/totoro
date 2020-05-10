@@ -27,8 +27,9 @@ repos:
     rev: 3.7.9
     hooks:
     - id: flake8
--   repo: https://github.com/pre-commit/mirrors-autopep8
-    rev: v1.5.2
+-   repo: https://github.com/ambv/black
+    rev: stable
     hooks:
-    -   id: autopep8
-        args: [-i, -r, -a]
+    - id: black
+      language_version: python3.7
+      exclude: ^staticfiles/
