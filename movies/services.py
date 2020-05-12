@@ -1,7 +1,11 @@
 import logging
 
 from external_services.api_clients.ghibli_api import GhibliAPIClient
-from movies.exceptions import MovieDoesNotExist
+from movies.exceptions import (
+    DataMappingError,
+    MovieDoesNotExist,
+    MultipleMoviesExist,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -24,11 +28,12 @@ def generate_movie_data_with_people(movie_uuid):
     movie_data = _fetch_movie_data(movie_uuid)
     people_data = _fetch_all_people()
 
-    response_data = _merge_movies_data_with_people_data(
-        movie_data, people_data
-    )
+    merged_data = _merge_movies_data_with_people_data(movie_data, people_data)
 
-    return response_data
+    if len(merged_data) != 1:
+        raise DataMappingError("Movies and People Data Mapping Error!")
+
+    return merged_data[0]
 
 
 # "private" helpers
@@ -56,14 +61,14 @@ def _fetch_movie_data(movie_uuid):
         if movie_data["id"] == movie_uuid
     ]
 
-    if len(movie_data) > 1:
-        raise MovieDoesNotExist(
-            "External API returned more than one values for UUID!"
-        )
-
     if not movie_data:
         raise MovieDoesNotExist(
             f"Movie ID {movie_uuid} not present in external API!"
+        )
+
+    if len(movie_data) > 1:
+        raise MultipleMoviesExist(
+            f"External API returned more than one movies for UUID {movie_uuid}!"
         )
 
     return movie_data
