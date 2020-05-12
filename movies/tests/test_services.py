@@ -129,7 +129,7 @@ class TestListMovieWithPeopleService:
         "external_services.api_clients.ghibli_api.GhibliAPIClient.get_people",
         autospec=True,
     )
-    def test_generate_movie_data_with_people_fails_for_no_movies(
+    def test_generate_movie_data_with_people_fails_for_movie_uuid_does_exist(
         self,
         mock_people_api_call,
         mock_movies_api_call,
