@@ -46,8 +46,6 @@ class GhibliMovies(ViewSet):
     @method_decorator(cache_page(settings.CACHE_TTL))
     def retrieve(self, request, pk=None):
 
-        1 / 0
-
         try:
             api_data = generate_movie_data_with_people(pk)
 
