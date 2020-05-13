@@ -15,6 +15,7 @@ bpython = "^0.19"
 djangorestframework = "^3.11.0"
 django-redis = "^4.11.0"
 requests = "^2.23.0"
+sentry-sdk = "^0.14.4"
 
 [tool.poetry.dev-dependencies]
 pre-commit = "^2.3.0"
