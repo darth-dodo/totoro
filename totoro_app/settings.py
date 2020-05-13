@@ -175,6 +175,28 @@ class Base(Configuration):
 
     CACHE_TTL = values.PositiveIntegerValue(environ_prefix="", default=(0))
 
+    # sentry setup
+    ENABLE_SENTRY = values.BooleanValue(environ_prefix="", default=False)
+    SENTRY_PROJECT_ID = values.Value(environ_prefix="", default=None)
+    SENTRY_KEY = values.Value(environ_prefix="", default=None)
+
+    # https://django-configurations.readthedocs.io/en/stable/patterns/#setup-methods
+    @classmethod
+    def post_setup(cls):
+        super().post_setup()
+
+        if cls.ENABLE_SENTRY:
+            import sentry_sdk
+            from sentry_sdk.integrations.django import DjangoIntegration
+
+            sentry_sdk.init(
+                dsn=f"https://{cls.SENTRY_KEY}.ingest.sentry.io/{cls.SENTRY_PROJECT_ID}",
+                integrations=[DjangoIntegration()],
+                # If you wish to associate users to errors (assuming you are using
+                # django.contrib.auth) you may enable sending PII data.
+                send_default_pii=True,
+            )
+
 
 class Dev(Base):
 
