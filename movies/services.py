@@ -101,7 +101,6 @@ def _merge_movies_data_with_people_data(movies_data, people_data):
         for movie_url in person_movie_urls:
 
             if movie_url not in all_movie_urls:
-                logger.info("Person movie is not present in all movies")
                 continue
 
             movie_people = movie_people_mapping.get(movie_url, [])
