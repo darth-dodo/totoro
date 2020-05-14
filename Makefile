@@ -4,21 +4,18 @@ requirements-dev:
 requirements:
 	poetry export -f requirements.txt > requirements.txt
 
-env-vars-template:
+update-env-vars-template:
 	cp .env .env.template
+	cp .poetry.env .poetry.env.template
 
 pyshell:
 	poetry shell
 
-server:
+totoro-server:
 	python manage.py runserver_plus
 
-djshell:
+django-shell:
 	python manage.py shell_plus --bpython
-
-
-i-djshell:
-	python manage.py shell_plus --ipython
 
 migrations:
 	python manage.py makemigrations
@@ -30,3 +27,18 @@ static:
 update-requirements:
 	make requirements
 	make requirements-dev
+
+docker-django-shell:
+	docker-compose exec order-service python manage.py shell_plus --bpython
+
+docker-totoro-server:
+	docker-compose up --build
+
+docker-detached-totoro-server:
+	docker-compose up -d --build
+
+docker-run-tests:
+	docker-compose exec web py.test
+
+docker-totoro-server-down:
+	docker-compose down
