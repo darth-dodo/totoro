@@ -80,7 +80,7 @@
 
 ## OpenAPI interface
 - The homepage `localhost:8000` provides the Swagger interface
-- The homepage `localhost:8000/redoc/` provides the Redoc interface
+- `localhost:8000/redoc/` provides the Redoc interface
 
 
 ---
