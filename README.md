@@ -92,6 +92,7 @@
 
 # Next Steps
 - Implementing pagination
+- Handle `MultipleMoviesExist` and `DataMappingError` as well in the controller layer. Currently handling `MovieDoesNotExist` and `ExternalAPIError`.
 - Write Serializer for representing the data
 - Adding retries and backoff mechanisms when the external API requests are failing
 - API throttling to prevent DDoS attacks using DRF throttle classes
