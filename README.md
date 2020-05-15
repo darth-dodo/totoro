@@ -79,6 +79,10 @@
 ```
 - The timestamp can used to confirm that the API response is cached for 1 minute as the timestamp value remains the same for API calls done after the response is cached.
 
+## API endpoints
+- `http://localhost:8000/movies/` will return a list of all the movies
+- `http://localhost:8000/movies/2baf70d1-42bb-4437-b551-e5fed5a87abe/` will return details of a particular movie
+
 ## OpenAPI interface
 - The homepage `localhost:8000` provides the Swagger interface
 - `localhost:8000/redoc/` provides the Redoc interface
