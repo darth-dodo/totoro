@@ -26,6 +26,13 @@ class GhibliMovies(ViewSet):
 
     @method_decorator(cache_page(settings.CACHE_TTL))
     def list(self, request):
+        """
+        Viewset to retrieve movie information across movies
+        - Cached Endpoint have a TTL as defined across the settings
+
+        :param request: Django REST Framework Request
+        :return dict: Movie Data
+        """
 
         try:
             api_data = generate_list_movies_with_people()
@@ -45,6 +52,15 @@ class GhibliMovies(ViewSet):
 
     @method_decorator(cache_page(settings.CACHE_TTL))
     def retrieve(self, request, pk=None):
+
+        """
+        Viewset to retrieve movie information across a particular UUID
+        - Cached Endpoint have a TTL as defined across the settings
+
+        :param request: Django REST Framework Request
+        :param pk str: Movies External API UUID
+        :return dict: Movie Data across UUID
+        """
 
         try:
             api_data = generate_movie_data_with_people(pk)

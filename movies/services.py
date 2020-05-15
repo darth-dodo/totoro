@@ -14,6 +14,15 @@ logger = logging.getLogger(__name__)
 
 
 def generate_list_movies_with_people():
+    """
+    Service used to fetch all the movies and people data
+
+    - interacts with the external movies API
+    - interacts with the external people API
+    - merge the data
+
+    :return response_data list: Response Data
+    """
     movies_data = _fetch_all_movies()
     people_data = _fetch_all_people()
 
@@ -25,6 +34,16 @@ def generate_list_movies_with_people():
 
 
 def generate_movie_data_with_people(movie_uuid):
+    """
+    Service used to generate the data for a single movie or raise DataMapping Error
+
+    - Fetch Movie data or raise Exception
+    - Merge the Movie data with People data
+    - Return the Response
+
+    :param movie_uuid str: External Service Movie UUID
+    :return dict: Response Data
+    """
     movie_data = _fetch_movie_data(movie_uuid)
     people_data = _fetch_all_people()
 
@@ -40,6 +59,10 @@ def generate_movie_data_with_people(movie_uuid):
 
 
 def _fetch_all_movies():
+    """
+    Helper function to interact with External API client and ask for selective result fields
+    :return: Movies data as returned by the external client
+    """
     client = GhibliAPIClient()
     movies_fields = {"fields": "id,title,director,producer,release_date,url"}
     movies_data = client.get_movies(**movies_fields)
@@ -47,6 +70,10 @@ def _fetch_all_movies():
 
 
 def _fetch_all_people():
+    """
+    Helper function to interact with External API client and ask for selective result fields
+    :return: People data as returned by the external client
+    """
     client = GhibliAPIClient()
     people_fields = {"fields": "id,name,films,url"}
     people_data = client.get_people(**people_fields)
@@ -54,6 +81,14 @@ def _fetch_all_people():
 
 
 def _fetch_movie_data(movie_uuid):
+    """
+    Helper function to interact with External API client and ask for a particular movie
+    - Raise `MovieDoesNotExist` in case the movie is not present in the external provider response
+    - Raise `MultipleMoviesExist` in case the result set from external client as duplicate values across a single UUID
+
+    :return: Movie data as returned by the external client
+    """
+
     all_movies_data = _fetch_all_movies()
     movie_data = [
         movie_data
@@ -75,6 +110,13 @@ def _fetch_movie_data(movie_uuid):
 
 
 def _merge_movies_data_with_people_data(movies_data, people_data):
+    """
+    Helper function to merge responses of people and movies data
+
+    :param movies_data dict: Response data from helper function
+    :param people_data dict: Response data from helper function
+    :return response_data: Movies and People merged data
+    """
     response_data = dict()
 
     if not movies_data:
