@@ -8,6 +8,10 @@ update-env-vars-template:
 	cp .env .env.template
 	cp .poetry.env .poetry.env.template
 
+create-env-vars-from-template:
+	cp .env.template .env
+	cp .poetry.env.template .poetry.env
+
 pyshell:
 	poetry shell
 

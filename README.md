@@ -17,6 +17,7 @@
 
 
 # Setup
+- Run the command `make create-env-vars-from-template` to copy the env vars from `.env.template`
 - Use the command `make docker-totoro-server` or `docker-detached-totoro-server` to run the server
 
 
