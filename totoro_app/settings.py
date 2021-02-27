@@ -30,7 +30,7 @@ class Base(Configuration):
     DEBUG = values.BooleanValue(environ_prefix="", default=False)
 
     ALLOWED_HOSTS = values.ListValue(
-        environ_prefix="", default=["127.0.0.1", "localhost"]
+        environ_prefix="", default=["127.0.0.1", "localhost", "0.0.0.0"]
     )
 
     # Application definition
