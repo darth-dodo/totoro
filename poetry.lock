@@ -234,7 +234,7 @@ testing = ["django-discover-runner", "mock", "django-cache-url (>=1.0.0)", "dj-d
 name = "django-debug-toolbar"
 version = "2.2"
 description = "A configurable set of panels that display various debug information about the current request/response."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.5"
 
@@ -903,7 +903,7 @@ testing = ["pytest (>=3.5,<3.7.3 || >3.7.3)", "pytest-checkdocs (>=1.2.3)", "pyt
 [metadata]
 lock-version = "1.1"
 python-versions = "3.7.8"
-content-hash = "0ba491c46b7a84379c31643025138182ce19d52496d424ec92bfa2d58cd5c1d5"
+content-hash = "1b636f39607e4d3a05c93318e9cb73ee5bb99f40db1128c7484f6b2a865ccf3f"
 
 [metadata.files]
 appdirs = [
