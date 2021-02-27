@@ -1,2 +1,2 @@
-web: gunicorn totoro.wsgi --log-file -
+web: gunicorn totoro_app.wsgi --log-file -
 
